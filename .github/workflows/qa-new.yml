@@ -21,7 +21,7 @@ jobs:
 
       # 将git代码同步到qa服务器的项目目录
       - name: Deploy file to Qa Server
-        if: github.ref == 'refs/heads/develop' # 对分支进行检测
+        if: github.ref == 'refs/heads/main' # 对分支进行检测
         run: |
           rsync -azvP --exclude='.git' --exclude='.idea' ${{ secrets.SERVER_PATH }} ${{ secrets.SERVER_PORT }}
 
