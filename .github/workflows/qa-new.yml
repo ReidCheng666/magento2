@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
 
       - name: Deploy to Server
         uses: AEnterprise/rsync-deploy@v1.0
@@ -24,6 +24,8 @@ jobs:
           SERVER_IP: ${{ secrets.SERVER_HOST }}
           USERNAME: ${{ secrets.SERVER_USERNAME }}
           SERVER_DESTINATION: ${{ secrets.SERVER_PATH }}
+        run: echo Hello, world! in progress
+
       - name: Execute Script
         uses: appleboy/ssh-action@master
         with:
@@ -32,3 +34,4 @@ jobs:
           key: ${{ secrets.SERVER_KEY }}
           script: |
             cd ${{ secrets.SERVER_PATH }}
+        run: echo Hello, world! in progress
