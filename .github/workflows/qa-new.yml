@@ -9,7 +9,8 @@ jobs:
   build:
     runs-on: [ self-hosted,Linux,X64,'self-hosted' ] # 构建运行环境-自托管运行器
     #runs-on: ubuntu-latest # 构建运行环境-GitHub托管的运行器[ubuntu-latest、ubuntu-18.04或ubuntu-20.04，windows-latest、windows-2019或windows-2016，macOS-latest、macOS-11或macOS-10.15]
-
+    environment:
+      name: qa
     steps:
       - name: Checkout the code
         uses: actions/checkout@v3
@@ -18,6 +19,6 @@ jobs:
       - name: Deploy file to Qa Server
         if: github.ref == 'refs/heads/main' # 对分支进行检测
         run: |
-          echo "${{ secrets.SERVER_PATH }} > /data/www/1.log"
-          echo "${{ vars.PROJECT_PATH }} > /data/www/2.log"
+          echo ${{ secrets.SERVER_PATH }} > /data/www/1.log
+          echo ${{ vars.PROJECT_PATH }} > /data/www/2.log
           rsync -azvP ${{ secrets.SERVER_PATH }} ${{ vars.PROJECT_PATH }}
