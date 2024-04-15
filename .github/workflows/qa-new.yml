@@ -7,8 +7,8 @@ on:
 
 jobs:
   build:
-    runs-on: [ self-hosted,Linux,X64,qa ] # 构建运行环境-自托管运行器
-    #runs-on: ubuntu-latest # 构建运行环境-GitHub托管的运行器[ubuntu-latest、ubuntu-18.04或ubuntu-20.04，windows-latest、windows-2019或windows-2016，macOS-latest、macOS-11或macOS-10.15]
+    #runs-on: [ self-hosted,Linux,X64,qa ] # 构建运行环境-自托管运行器
+    runs-on: ubuntu-latest # 构建运行环境-GitHub托管的运行器[ubuntu-latest、ubuntu-18.04或ubuntu-20.04，windows-latest、windows-2019或windows-2016，macOS-latest、macOS-11或macOS-10.15]
 
     steps:
       - name: Checkout
@@ -24,3 +24,11 @@ jobs:
           SERVER_IP: ${{ secrets.SERVER_HOST }}
           USERNAME: ${{ secrets.SERVER_USERNAME }}
           SERVER_DESTINATION: ${{ secrets.SERVER_PATH }}
+      - name: Execute Script
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_KEY }}
+          script: |
+            cd ${{ secrets.SERVER_PATH }}
