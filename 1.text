@@ -1,0 +1,18 @@
+  deploy-to-qa:
+    name: deploy-to-qa
+    needs: build
+    if: github.ref == 'refs/heads/develop'
+    runs-on: [ self-hosted,Linux,X64,qa ] # 构建运行环境-自托管运行器
+    environment:
+      name: qa
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        # 这里可以添加将代码或构建产物部署到开发环境的步骤，例如使用SSH部署到服务器
+      - name: Deploy to QA
+        run: |
+          echo "Deploy to QA"
+          rsync -azvP --exclude='.git' ${{ secrets.GIT_CODE_PATH }} ${{ secrets.WWW_CODE_PATH }}
+          rsync -azvP --exclude ".git/" --exclude "deploy*.sh" --exclude "var/*" --exclude "pub/media/" ${{GITHUB_WORKSPACE%/}} ${{ secrets.WWW_AMQ_PATH }}
+
+
