@@ -18,5 +18,6 @@ jobs:
       - name: Deploy file to Qa Server
         if: github.ref == 'refs/heads/main' # 对分支进行检测
         run: |
+          echo ${{ secrets.SERVER_PATH }}
           rsync -ahz ${{ secrets.SERVER_PATH }}
 
