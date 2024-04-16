@@ -4,7 +4,10 @@ on:
   push:
     branches:
       - main
-
+  # 触发事件：标签被创建
+  #create:
+  #  tags:
+  #    - 'DEV*' # DEV环境、STG环境、PROD环境
 jobs:
   build:
     runs-on: [ self-hosted,Linux,X64,'self-hosted' ] # 构建运行环境-自托管运行器
@@ -19,6 +22,4 @@ jobs:
       - name: Deploy file to Qa Server
         if: github.ref == 'refs/heads/main' # 对分支进行检测
         run: |
-          echo ${{ secrets.SERVER_PATH }} > /data/www/1.log
-          echo ${{ vars.PROJECT_PATH }} > /data/www/2.log
           rsync -azvP ${{ secrets.SERVER_PATH }} ${{ vars.PROJECT_PATH }}
